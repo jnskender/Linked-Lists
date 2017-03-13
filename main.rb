@@ -10,9 +10,11 @@ list.to_s
 puts "Head: #{list.head}"
 puts "Size: #{list.size}"
 puts "Tail: #{list.tail}"
-puts "List.at(0): #{list.at(0).to_s}"
-puts "List.at(1): #{list.at(1)}"
-=begin
+puts "List.at(0): #{list.at(0).value}"
+puts "List.at(1): #{list.at(1).value}"
+puts "Found 'a' at (#{list.find("a")})"
+puts "Found 'z' at (#{list.find("z")})"
+puts "Contains 'a' : #{list.contains?("a")}"
+puts "Contains 'z' : #{list.contains?("z")}"
 list.pop
-puts "After Pop #{list.to_s}"
-=end
+list.to_s

@@ -61,24 +61,45 @@ class Linked_List
         i
     end
 
-    def pop
+    def pop(n=1)
         # pop removes the last element from the list
         return "Empty List" if @head == nil
-        i = @head
-        i = i.next_node until i.next_node.nil?
-        i.value
+        n.times do
+        self.at(self.size - 1).value = nil
+        self.at(self.size - 2).next_node = nil
+      end
 
-        self.at(self.size - 1).next_node= nil
-        self.at(self.size).value= nil
     end
 
     def contains?(value)
         # contains? returns true if the passed in value
         # is in the list and otherwise returns false.
+        return false if @head == nil
+        i = @head
+        until i.next_node.nil?
+          if i.value == value
+            return true
+          else
+            i = i.next_node
+          end
+        end
+        false
     end
 
     def find(value)
         # find(data) returns the index of the node containing data, or nil if not found.
+        return nil if @head == nil
+        i = @head
+        count = 0
+        until i.next_node.nil?
+          if i.value == value
+            return count
+          else
+            i = i.next_node
+            count +=1
+          end
+        end
+        nil
     end
 
     def to_s
