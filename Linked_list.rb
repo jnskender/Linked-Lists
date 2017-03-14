@@ -1,7 +1,5 @@
 require './Node.rb'
 class Linked_List
-    attr_accessor :head
-
     def initialize
         @head = nil
     end
@@ -40,12 +38,12 @@ class Linked_List
 
     def head
         # head returns the first node in the list
-        @head.nil? ? 'There is no head' : @head.value.to_s
+        @head.nil? ? nil : @head
     end
 
     def tail
         # tail returns the last node in the list
-        return "Empty List" if @head == nil
+        return 'Empty List' if @head.nil?
         i = @head
         i = i.next_node until i.next_node.nil?
         i.value
@@ -53,7 +51,7 @@ class Linked_List
 
     def at(index)
         # at(index) returns the node at the given index
-        return "Empty List" if @head == nil
+        return puts 'Empty List' if @head.nil?
         i = @head
         index.times do
             i = i.next_node
@@ -61,43 +59,42 @@ class Linked_List
         i
     end
 
-    def pop(n=1)
+    def pop(n = 1)
         # pop removes the last element from the list
-        return "Empty List" if @head == nil
+        return 'Empty List' if @head.nil?
         n.times do
-        self.at(self.size - 1).value = nil
-        self.at(self.size - 2).next_node = nil
-      end
-
+            at(size - 1).value = nil
+            at(size - 2).next_node = nil
+        end
     end
 
     def contains?(value)
         # contains? returns true if the passed in value
         # is in the list and otherwise returns false.
-        return false if @head == nil
+        return false if @head.nil?
         i = @head
         until i.next_node.nil?
-          if i.value == value
-            return true
-          else
-            i = i.next_node
-          end
+            if i.value == value
+                return true
+            else
+                i = i.next_node
+            end
         end
         false
     end
 
     def find(value)
         # find(data) returns the index of the node containing data, or nil if not found.
-        return nil if @head == nil
+        return nil if @head.nil?
         i = @head
         count = 0
         until i.next_node.nil?
-          if i.value == value
-            return count
-          else
-            i = i.next_node
-            count +=1
-          end
+            if i.value == value
+                return count
+            else
+                i = i.next_node
+                count += 1
+            end
         end
         nil
     end
@@ -120,12 +117,39 @@ class Linked_List
     end
 
     # EXTRA CREDIT
-    def insert_at(index)
-        # insert_at(index) that inserts the data at the given index
+    def insert_at(value, index)
+        # insert_at(value, index) that inserts the data at the given index
+        i = @head
+        if  index > size
+            return puts 'Index Out of Bounds' # Should probably learn how to throw actual errors
+        elsif index == 0 # inserting a new head
+            prepend(value) 
+        elsif index > 0
+            node = Node.new(value)
+            node.next_node = at(index)
+            (index - 1).times do
+                i = i.next_node
+            end
+            i.next_node = node
+        end
     end
 
-    def remove_at(index)
+    def remove_at(index) # 2
         # remove_at(index) that removes the node at the given index.
         # (You will need to update the links of your nodes in the list when you remove a node.)
+        if index > size || index < 0
+            puts 'Index Out of Bounds' # Should probably learn how to throw actual errors
+        elsif index == size
+            pop
+        elsif index == 0 #if node at index is the head node
+            @head = @head.next_node
+        elsif index < size
+            i = @head
+            (index - 1).times do
+                i = i.next_node #get node before node at index
+            end
+            i.next_node = i.next_node.next_node #current nodes.next_node equal to 2 nodes forward
+            #not sure if how to delete node at (index) permanitely or if its even necessary
+        end
     end
 end
